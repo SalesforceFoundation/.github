@@ -1,0 +1,8 @@
+{
+    "name": "SFDO Prettier Action",
+    "description": "Run Prettier to check formatting.",
+    "iconName": "sfdo",
+    "filePatterns": [
+        "\\.prettierrc\\.(yml|yaml)$"
+    ]
+}

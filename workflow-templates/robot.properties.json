@@ -1,0 +1,8 @@
+{
+    "name": "SFDO Robot Lint Action",
+    "description": "Run rflint for Robot code.",
+    "iconName": "sfdo",
+    "filePatterns": [
+        "requirements.txt$"
+    ]
+}

@@ -1,0 +1,5 @@
+{
+    "name": "SFDO Jest Action",
+    "description": "Execute Jest LWC tests",
+    "iconName": "sfdo"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "SFDO Python Actions",
+    "description": "Run Black, flake8, and Pytest for Python code.",
+    "iconName": "sfdo",
+    "filePatterns": [
+        "requirements.txt$"
+    ]
+}

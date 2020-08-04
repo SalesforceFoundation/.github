@@ -1,0 +1,9 @@
+{
+    "name": "SFDO Label Audit Action",
+    "description": "Run Label Audit script.",
+    "iconName": "sfdo",
+    "filePatterns": [
+        "label_audit\\.py$",
+        "requirements\\.txt$"
+    ]
+}
