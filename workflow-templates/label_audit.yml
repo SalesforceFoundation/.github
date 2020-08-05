@@ -22,4 +22,4 @@ jobs:
           venv/bin/pip install -r requirements.txt
       - name: Label Audit
         run: |
-          venv/bin/python label_audit.py
+          venv/bin/python scripts/label_audit.py
