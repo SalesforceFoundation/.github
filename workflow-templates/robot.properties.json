@@ -3,6 +3,6 @@
     "description": "Run rflint for Robot code.",
     "iconName": "sfdo",
     "filePatterns": [
-        "requirements.txt$"
+        "cumulusci\\.yml$"
     ]
 }

@@ -1,5 +1,9 @@
 {
     "name": "SFDO Jest Action",
     "description": "Execute Jest LWC tests",
-    "iconName": "sfdo"
+    "iconName": "sfdo",
+    "filePatterns": [
+        "jest\\.config\\.js$",
+        "jest\\.setup\\.js$"
+    ]
 }

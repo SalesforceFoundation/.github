@@ -1,7 +1,7 @@
 name: Python
 on: [push]
 jobs:
-  lint:
+  pytest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -20,9 +20,6 @@ jobs:
         run: |
           python3 -m venv venv
           venv/bin/pip install -r requirements.txt
-      - name: Black
+      - name: Pytest
         run: |
-          venv/bin/black --check --diff .
-      - name: Flake8
-        run: |
-          venv/bin/flake8
+          venv/bin/pytest

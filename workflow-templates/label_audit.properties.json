@@ -3,7 +3,7 @@
     "description": "Run Label Audit script.",
     "iconName": "sfdo",
     "filePatterns": [
-        "\\.labelauditignore\\.json",
+        "\\.labelauditignore\\.json$",
         "requirements\\.txt$"
     ]
 }

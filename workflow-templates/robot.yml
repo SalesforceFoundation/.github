@@ -22,4 +22,4 @@ jobs:
           venv/bin/pip install -r requirements.txt
       - name: Robot Framework Lint
         run: |
-          venv/bin/rflint --recursive robot
+          venv/bin/cci task run robot_lint

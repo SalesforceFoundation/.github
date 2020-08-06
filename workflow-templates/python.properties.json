@@ -1,8 +1,8 @@
 {
-    "name": "SFDO Python Actions",
-    "description": "Run Black, flake8, and Pytest for Python code.",
+    "name": "SFDO Python Lint Actions",
+    "description": "Run Black and flake8 for Python code.",
     "iconName": "sfdo",
     "filePatterns": [
-        "requirements.txt$"
+        "requirements\\.txt$"
     ]
 }
