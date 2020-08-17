@@ -1,0 +1,8 @@
+{
+    "name": "SFDO cspell Action",
+    "description": "Run cspell on Apex, JavaScript, HTML, Markdown, XML, SQL, Python, and YAML files.",
+    "iconName": "sfdo",
+    "filePatterns": [
+        "\\.cspell\\.json$"
+    ]
+}

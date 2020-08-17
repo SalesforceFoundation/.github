@@ -1,0 +1,8 @@
+{
+    "name": "SFDO Lockfile-Lint Action",
+    "description": "Audit lockfile.",
+    "iconName": "sfdo",
+    "filePatterns": [
+        "\\.lockfile-lintrc\\.(yml|yaml)$"
+    ]
+}

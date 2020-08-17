@@ -1,0 +1,9 @@
+{
+    "name": "SFDO Robot Lint Action",
+    "description": "Run rflint for Robot code.",
+    "iconName": "sfdo",
+    "categories": ["RobotFramework", "Python"],
+    "filePatterns": [
+        "cumulusci\\.yml$"
+    ]
+}

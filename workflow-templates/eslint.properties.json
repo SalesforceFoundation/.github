@@ -1,0 +1,9 @@
+{
+    "name": "SFDO ESLint Action",
+    "description": "Run ESLint on JavaScript files",
+    "iconName": "sfdo",
+    "categories": ["Javascript"],
+    "filePatterns": [
+        "\\.eslintrc\\.(yaml|yml)$"
+    ]
+}
