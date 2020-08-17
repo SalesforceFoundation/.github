@@ -2,6 +2,7 @@
     "name": "SFDO Python Test Actions",
     "description": "Run Pytest for Python code.",
     "iconName": "sfdo",
+    "categories": ["Python"],
     "filePatterns": [
         "requirements\\.txt$"
     ]

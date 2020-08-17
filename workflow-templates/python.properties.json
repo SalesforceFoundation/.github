@@ -2,6 +2,7 @@
     "name": "SFDO Python Lint Actions",
     "description": "Run Black and flake8 for Python code.",
     "iconName": "sfdo",
+     "categories": ["Python"],
     "filePatterns": [
         "requirements\\.txt$"
     ]

@@ -2,6 +2,7 @@
     "name": "SFDO Prettier Action",
     "description": "Run Prettier to check formatting.",
     "iconName": "sfdo",
+    "categories": ["Javascript", "Apex", "HTML", "JSON", "Markdown"],
     "filePatterns": [
         "\\.prettierrc\\.(yml|yaml)$"
     ]
