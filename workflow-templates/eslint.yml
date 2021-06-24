@@ -21,4 +21,4 @@ jobs:
           yarn install
       - name: eslint
         run: |
-          npx eslint "**/*.js"
+          npx eslint "**/*.js" --no-error-on-unmatched-pattern
