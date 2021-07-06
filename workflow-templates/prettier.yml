@@ -21,4 +21,4 @@ jobs:
           yarn install
       - name: prettier
         run: |
-          npx prettier "**/*.{cls,apex,js,html,md,yml,yaml,json}" --check
+          npx prettier "**/*.{cls,apex,js,html,md,yml,yaml,json}" --check --no-error-on-unmatched-pattern
