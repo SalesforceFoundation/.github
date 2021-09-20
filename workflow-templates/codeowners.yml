@@ -28,39 +28,10 @@ jobs:
   codeowners_workflow_comments:
     runs-on: ubuntu-latest
     steps:
-      - name: Query for reviewers
-        id: codeowners-team-members
-        uses: SalesforceFoundation/github-script@v4
-        with:
-          script: |
-            const review_team = process.env.CODEOWNERS_TEAM;
-
-            const query = `query ($org: String!, $slug: String!) {
-              organization(login: $org) {
-                team(slug: $slug) {
-                  members {
-                    nodes {
-                      login
-                    }
-                  }
-                }
-              }
-            }`;
-
-            const variables = {
-              org: context.repo.owner,
-              slug: process.env.CODEOWNERS_TEAM
-            }
-
-            const result = await github.graphql(query, variables)
-            review_team_members = result.organization.team.members.nodes
-              .map((_) => _.login)
-            return review_team_members
       - name: CODEOWNERS Review Requested
         id: codeowners-comment
         if: github.event.action == 'review_requested' &&
-            github.event.requested_team.slug == env.CODEOWNERS_team ||
-            contains(fromJSON(steps.codeowners-team-members.result), github.event.requested_reviewer.login)
+            github.event.requested_team.slug == env.CODEOWNERS_team
         uses: SalesforceFoundation/github-script@v4
         with:
           script: |
@@ -81,20 +52,11 @@ jobs:
             const comment_body = process.env.READY_FOR_REVIEW_COMMENT:
             let mention_text = '';
 
-            let team_reviewers = ${{ fromJSON(steps.codeowners-team-members.result) }}
-            let requested_team_reviewers = github.event.pull_request.requested_reviewers
+            let requested_reviewers = github.event.pull_request.requested_reviewers
               .map((_) => _.login)
-              .filter((login) => team_reviewers.includes(login))
 
-            if (requested_team_reviewers.length >= 1) {
-              github.issues.addAssignees({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                assignees: requested_team_reviewers,
-              });
-
-              let reviewer_mentions = team_reviewers
+            if (requested_reviewers.length >= 1) {
+              let reviewer_mentions = requested_reviewers
                 .map((login) => `@${login}`)
                 .join(', ');
                 mention_text = `Reviews have been requested from: @${reviewer_mentions}.`
