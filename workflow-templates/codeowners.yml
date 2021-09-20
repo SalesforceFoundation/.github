@@ -24,7 +24,7 @@ jobs:
       - name: CODEOWNERS Review Requested
         id: codeowners-comment
         if: github.event.action == 'review_requested' &&
-            github.event.requested_team.slug == env.CODEOWNERS_team
+            github.event.requested_team.slug == env.CODEOWNERS_TEAM
         uses: SalesforceFoundation/github-script@v4
         with:
           script: |
