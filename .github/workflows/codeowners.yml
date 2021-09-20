@@ -12,17 +12,10 @@ env:
   CODEOWNERS_COMMENT: |
     Release Engineering asks that teams use the following process for routine reviews:
 
-    1. After creating a non-draft pull request that includes automation updates,
-       a release engineer will be auto-assigned to the PR.
-    2. When dev review is complete and the PR is ready for the release engineer
-       to review, add a "ready for RE review" label to the PR to let us know when
-       the PR is ready for us to review.
-    3. If you've added the "ready for RE review" label but haven't received a
-       review within a 36 hours, @-mention the assigned RE in a comment on the PR.
-    4. If you don't receive a response from the assigned RE by the end of the
-       next business day (or your request is urgent), post a message to
-       #sfdo-releng-support that includes a link to this PR and one of us will
-       review as soon as we're able.
+    1. After creating a non-draft pull request that includes automation updates, a release engineer will be auto-assigned to the PR.
+    2. When dev review is complete and the PR is ready for the release engineer to review, add a "ready for RE review" label to the PR to let us know when the PR is ready for us to review.
+    3. If you've added the "ready for RE review" label but haven't received a review within a 36 hours, @-mention the assigned RE in a comment on the PR.
+    4. If you don't receive a response from the assigned RE by the end of the next business day (or your request is urgent), post a message to #sfdo-releng-support that includes a link to this PR and one of us will review as soon as we're able.
 
 jobs:
   codeowners_workflow_comments:
