@@ -10,7 +10,7 @@ env:
   READY_FOR_REVIEW_COMMENT: |
     This PR has been labeled as ready for Release Engineering review by
   CODEOWNERS_COMMENT: |
-    We ask that teams use the following process for routine reviews:
+    Release Engineering asks that teams use the following process for routine reviews:
 
     1. After creating a non-draft pull request that includes automation updates,
        a release engineer will be auto-assigned to the PR.
@@ -41,7 +41,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `👋 @${context.payload.pull_request.user.login}${comment_body}`
+              body: `Hi 👋 @${context.payload.pull_request.user.login}! ${comment_body}`
             })
       - name: Labeled ready for CODEOWNERS Review
         id: codeowners-labeled-ready
