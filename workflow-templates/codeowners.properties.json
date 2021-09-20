@@ -1,0 +1,8 @@
+{
+    "name": "SFDO Codeowners Review Workflows",
+    "description": "Housekeeping scripts for automated pull request workflows.",
+    "iconName": "sfdo",
+    "filePatterns": [
+        "CODEOWNERS$"
+    ]
+}
