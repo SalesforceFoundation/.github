@@ -59,7 +59,7 @@ jobs:
               let reviewer_mentions = requested_reviewers
                 .map((login) => `@${login}`)
                 .join(', ');
-                mention_text = `Reviews have been requested from: @${reviewer_mentions}.`
+                mention_text = `Reviews have been requested from: ${reviewer_mentions}.`
             }
 
             github.issues.createComment({

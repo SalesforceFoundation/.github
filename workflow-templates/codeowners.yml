@@ -52,14 +52,14 @@ jobs:
             const comment_body = process.env.READY_FOR_REVIEW_COMMENT
             let mention_text = '';
 
-            let requested_reviewers = github.event.pull_request.requested_reviewers
+            let requested_reviewers = context.payload.pull_request.requested_reviewers
               .map((_) => _.login)
 
             if (requested_reviewers.length >= 1) {
               let reviewer_mentions = requested_reviewers
                 .map((login) => `@${login}`)
                 .join(', ');
-                mention_text = `Reviews have been requested from: @${reviewer_mentions}.`
+                mention_text = `Reviews have been requested from: ${reviewer_mentions}.`
             }
 
             github.issues.createComment({
