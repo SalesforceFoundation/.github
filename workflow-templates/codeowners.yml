@@ -49,7 +49,7 @@ jobs:
         uses: SalesforceFoundation/github-script@v4
         with:
           script: |
-            const comment_body = process.env.READY_FOR_REVIEW_COMMENT:
+            const comment_body = process.env.READY_FOR_REVIEW_COMMENT
             let mention_text = '';
 
             let requested_reviewers = github.event.pull_request.requested_reviewers
