@@ -138,7 +138,7 @@ execute the step when a review is requested from the team we've defined
 in the `CODEOWNERS_TEAM` environment variable:
 
 ``` yaml
-if: github.event.action == 'review_requested' &&
+if: github.event.action == 'review_requested' && !github.event.pull_request.draft &&
     github.event.requested_team.slug == env.CODEOWNERS_TEAM
 ```
 
@@ -146,7 +146,7 @@ We'll want our second step, `codeowners-labeled-ready`, to use slightly
 different logic:
 
 ``` yaml
-if: github.event.action == 'labeled' &&
+if: github.event.action == 'labeled' && !github.event.pull_request.draft &&
     contains(github.event.pull_request.labels.*.name, 'ready for RE review')
 ```
 
@@ -253,7 +253,8 @@ We can now define our second step, `codeowners-labeled-ready`:
 ``` yaml
 - name: Labeled ready for CODEOWNERS Review
   id: codeowners-labeled-ready
-
+  if: github.event.action == 'labeled' && !github.event.pull_request.draft &&
+      contains(github.event.pull_request.labels.*.name, 'ready for RE review')
   uses: SalesforceFoundation/github-script@v4
   with:
     script: |
