@@ -5,7 +5,7 @@ title: Customizing PR workflows with github-script
 
 In this document we'll walk through an example workflow step by step to
 illustrate how your team can use the `github-script` library to
-customize your pull Request workflows.
+customize your pull request workflows.
 
 # Codeowners pull request workflow
 
