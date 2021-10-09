@@ -27,14 +27,42 @@ jobs:
         uses: SalesforceFoundation/github-script@v4
         with:
           script: |
-            const comment_body = process.env.CODEOWNERS_COMMENT
-            
-            github.issues.createComment({
-              issue_number: context.issue.number,
+            const comment_body = process.env.CODEOWNERS_COMMENT;
+            const comment_greeting = "Hi 👋";
+            const query = `query ($owner:String!, $name:String!,$number:Int!,) {
+              repository(owner: $owner, name: $name) {
+                pullRequest(number: $number) {
+                  comments(last: 100) {
+                    nodes {
+                      body
+                      author {
+                        login
+                      }
+                    }
+                  }
+                }
+              }
+            }`;
+            const variables = {
               owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `Hi 👋 @${context.payload.pull_request.user.login}! ${comment_body}`
-            })
+              name: context.repo.repo,
+              number: context.payload.pull_request.number,
+            };
+            const result = await github.graphql(query, variables);
+            const no_existing_comment = result.repository.pullRequest.comments.nodes.every(
+              (comment) => {
+                comment.author.login == "github-actions" &&
+                  !comment.body.startsWith(comment_body);
+              }
+            );
+            if (no_existing_comment) {
+              github.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `${comment_greeting} @${context.payload.pull_request.user.login}! ${comment_body}`,
+              });
+            }
       - name: Labeled ready for CODEOWNERS Review
         id: codeowners-labeled-ready
         if: github.event.action == 'labeled' && !github.event.pull_request.draft &&

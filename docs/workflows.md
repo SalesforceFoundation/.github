@@ -165,32 +165,85 @@ APIs in Javascript.[2]
 
 ### Javascript
 
-The simpler of the two scripts uses
+The first of the two scripts uses
 [createComment](https://octokit.github.io/rest.js/v18#issues-create-comment)
 to insert the markdown comment we've set as an environment variable
-above:
+above.
+
+We begin by storing the value of our `codeowners_comment` environment
+variable in a constant called `comment_body`, demonstrating how we can
+access environment variables via `process.env`:
 
 ``` javascript
-const comment_body = process.env.CODEOWNERS_COMMENT
-
-github.issues.createComment({
-  issue_number: context.issue.number,
-  owner: context.repo.owner,
-  repo: context.repo.repo,
-  body: `Hi 👋 @${context.payload.pull_request.user.login}! ${comment_body}`
-})
+const comment_body = process.env.CODEOWNERS_COMMENT;
+const comment_greeting = "Hi 👋";
 ```
 
-Expressed another way:
+We also want to prevent the posting of
+[duplicate](https://github.com/SalesforceFoundation/Grants-Management/pull/897#issuecomment-937141993)
+[comments](https://github.com/SalesforceFoundation/Grants-Management/pull/897#issuecomment-938195335).
+There's more than one way to do this, so we'll pick the complicated way
+(The simpler approach uses octokit's
+[`listComments`](https://octokit.github.io/rest.js/v18#issues-list-comments).)
+as a demonstration of how to use a GraphQL query:
 
-1.  Store the value of our `codeowners_comment` environment variable in
-    a constant called `comment_body`, demonstrating how we can access
-    environment variables via `process.env`.
-2.  We can access the PR number, GitHub organization slug, and the name
-    of the repository via `context`. We can also use the webhook payload
-    (same as `github.event` above!) directly via `context.payload`.
-3.  Use a template literal to combine a mention of the PR author with
-    the body of our comment.
+``` javascript
+const query = `query ($owner:String!, $name:String!,$number:Int!,) {
+  repository(owner: $owner, name: $name) {
+    pullRequest(number: $number) {
+      comments(last: 100) {
+        nodes {
+          body
+          author {
+            login
+          }
+        }
+      }
+    }
+  }
+}`;
+```
+
+We can access the PR number, GitHub organization slug, and the name of
+the repository via `context`. We can also use the webhook payload (same
+as `github.event` above!) directly via `context.payload`. We use these
+variables and run the query:
+
+``` javascript
+const variables = {
+  owner: context.repo.owner,
+  name: context.repo.repo,
+  number: context.payload.pull_request.number,
+};
+const result = await github.graphql(query, variables);
+```
+
+Next, iterate over the query result and check whether any the
+github-actions bot has authored any comments that begin with our
+`comment_greeting`:
+
+``` javascript
+const no_existing_comment = result.repository.pullRequest.comments.nodes.every(
+  (comment) => {
+    comment.author.login == "github-actions" &&
+      !comment.body.startsWith(comment_body);
+  }
+);
+```
+
+Finally, if no existing comments are found, use a template literal to
+combine a mention of the PR author with the body of our comment:
+
+``` javascript
+if (no_existing_comment) {
+  github.issues.createComment({
+    issue_number: context.issue.number,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    body: `${comment_greeting} @${context.payload.pull_request.user.login}! ${comment_body}`,
+  });
+}
+```
 
 Our review comment script adds a bit more logic:
 
@@ -235,14 +288,42 @@ operator to define a literal block:
 uses: SalesforceFoundation/github-script@v4
 with:
   script: |
-    const comment_body = process.env.CODEOWNERS_COMMENT
-
-    github.issues.createComment({
-      issue_number: context.issue.number,
+    const comment_body = process.env.CODEOWNERS_COMMENT;
+    const comment_greeting = "Hi 👋";
+    const query = `query ($owner:String!, $name:String!,$number:Int!,) {
+      repository(owner: $owner, name: $name) {
+        pullRequest(number: $number) {
+          comments(last: 100) {
+            nodes {
+              body
+              author {
+                login
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const variables = {
       owner: context.repo.owner,
-      repo: context.repo.repo,
-      body: `Hi 👋 @${context.payload.pull_request.user.login}! ${comment_body}`
-    })
+      name: context.repo.repo,
+      number: context.payload.pull_request.number,
+    };
+    const result = await github.graphql(query, variables);
+    const no_existing_comment = result.repository.pullRequest.comments.nodes.every(
+      (comment) => {
+        comment.author.login == "github-actions" &&
+          !comment.body.startsWith(comment_body);
+      }
+    );
+    if (no_existing_comment) {
+      github.issues.createComment({
+        issue_number: context.issue.number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        body: `${comment_greeting} @${context.payload.pull_request.user.login}! ${comment_body}`,
+      });
+    }
 ```
 
 (For details on how to invoke a separate file see the
