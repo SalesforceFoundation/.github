@@ -340,7 +340,7 @@ Pretty simple.
 2.  Review existing workflows like NPSP's [compliance workflow](https://github.com/SalesforceFoundation/NPSP/blob/1a784fef84ac88053578a3ec7afaa8fc5cf9acf9/.github/workflows/compliance.yml)
 3.  Ask SFDO Release Engineering:
     1.  If it's simple: #sfdo-releng-support
-    2.  If it's complex: Open a WI from the [RelEng Service Catalog](https://confluence.internal.salesforce.com/display/SFDOIDP/Catalog+of+Services#CatalogofServices-GitHubActionsEnablement)
+    2.  If it's complex: Open a WI from the [RelEng Service Catalog](https://confluence.internal.salesforce.com/x/YYXMEQ#CatalogofServices-GitHubActionsEnablement)
 
 [1] RelEng note: Prefix shared workflow names to make them easier to identify reusable workflows.
 
