@@ -112,7 +112,7 @@ We'll want our second step, `codeowners-labeled-ready`, to use slightly differen
 
 ``` yaml
 if: github.event.action == 'labeled' && !github.event.pull_request.draft &&
-    contains(github.event.pull_request.labels.*.name, 'ready for RE review')
+    contains(github.event.label.name, 'ready for RE review')
 ```
 
 Note that we're using the [`contains` function](https://docs.github.com/en/actions/learn-github-actions/expressions#contains) and the [`*` object filter](https://docs.github.com/en/actions/learn-github-actions/expressions#object-filters) syntax.
@@ -268,7 +268,7 @@ We can now define our second step, `codeowners-labeled-ready`:
 - name: Labeled ready for CODEOWNERS Review
   id: codeowners-labeled-ready
   if: github.event.action == 'labeled' && !github.event.pull_request.draft &&
-      contains(github.event.pull_request.labels.*.name, 'ready for RE review')
+      contains(github.event.label.name, 'ready for RE review')
   uses: SalesforceFoundation/github-script@v4
   with:
     script: |

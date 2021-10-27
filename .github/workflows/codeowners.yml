@@ -66,7 +66,7 @@ jobs:
       - name: Labeled ready for CODEOWNERS Review
         id: codeowners-labeled-ready
         if: github.event.action == 'labeled' && !github.event.pull_request.draft &&
-            contains(github.event.pull_request.labels.*.name, 'ready for RE review')
+            contains(github.event.label.name, 'ready for RE review')
         uses: SalesforceFoundation/github-script@v4
         with:
           script: |
